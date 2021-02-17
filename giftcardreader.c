@@ -8,7 +8,7 @@
 
 
 #include "giftcard.h"
-
+#include <string.h>
 #include <stdio.h>
 #include <strings.h>
 
