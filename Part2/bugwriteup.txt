@@ -1,0 +1,28 @@
+Bug Write Up for Part 2
+
+crash1.gft
+
+Changed the value of examplegc.num_bytes to -1 from 116 in giftcardexamplewirter.c 
+Generated crash1.gft file using giftcardexamplewirter.c 
+Used GDB to step through program to identify the fucntion where code crashed: gdb --args ./gift 1 crash1.gft
+the program crashed in line fread(&ret_val->num_bytes, 4,1, input_fd);
+180		while (!feof(input_fd)) {
+(gdb) 
+Thread 2 received signal SIGSEGV, Segmentation fault.
+0x00007fff2039d0e0 in ?? ()
+
+Bug: 
+
+The crash.gft file making a request that is too large and the space cannot be allocated and a null pointer is returned.
+The negative valeu (-1) passed via num_bytes is converted to an ungsigned value of type size_it which leads to a huge
+positive value.
+
+Fix: 
+Added a check in giftcardreader.c program to validate the value of num_bytes.
+
+        if (ret_val->num_bytes < 0) {
+
+        printf (" Negative value exiting \n");
+        exit(0);
+
+    
