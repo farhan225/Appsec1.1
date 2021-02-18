@@ -189,7 +189,7 @@ struct this_gift_card *gift_card_reader(FILE *input_fd) {
             printf (" Negative value exiting \n");
             exit(0);
 
-        }
+       }
 
 		// Make something the size of the rest and read it in
 		ptr = malloc(ret_val->num_bytes);
