@@ -53,7 +53,9 @@ void animate(char *msg, unsigned char *program) {
             case 0x08:
                 goto done;
             case 0x09:
-                pc += (char)arg1;
+                //pc += (char)arg1;
+                //fix hang.gft
+                pc += arg1;
                 break;
             case 0x10:
                 if (zf) pc += (char)arg1;
