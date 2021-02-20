@@ -25,4 +25,31 @@ Added a check in giftcardreader.c program to validate the value of num_bytes.
         printf (" Negative value exiting \n");
         exit(0);
 
+
+Crash2.gft
+
+being worked on
+
+
+hang.gft
+
+i used the case 0x09 in the animate funciton to create a loop that caused the program to stay in the loop
+and cause the hang. The animate function was reached by changing the examplegcrd.type_of_record = 3; 
+in giftcardexamplewirter . I also passed value 250 ( signed 8 bit integer value -6) as arg1 for case 0x09. 
+I realizrd that passing -3, -6, -9, -12 or any signed char values multiple of 3 as arg1 will cause the program to hang. 
+if 253 or (-3) is used as arg1 , will cause pc to go back by 3 memory location however, outside the while loop 
+pc+=3; will cuase PC to go three memory location and never satisfying the contditon if (pc > program+256) break; and stay in the 
+loop causing the hang.
+
+Fix:
+  arg1 is declrased as unsigned char inside the while loop:
+   while (1) {
+        unsigned char op, arg1, arg2;
+
+however, in case 0x09, the vulnerability was created by allowing the casting of signed char on pc += (char)arg1;
+updated the line of code pc += arg1; to only allow casting of unsigned char and stop PC to move
+back and forth.
+
+
+
     
