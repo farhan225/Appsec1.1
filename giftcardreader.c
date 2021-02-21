@@ -275,7 +275,8 @@ int main(int argc, char **argv) {
     if (input_fd == NULL)
     {
         printf("sorry, file does not exist or you must pass a gift card file for me to function.\n");
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
+        return 0;
     }
 	thisone = gift_card_reader(input_fd);
 	if (argv[1][0] == '1') print_gift_card_info(thisone);
