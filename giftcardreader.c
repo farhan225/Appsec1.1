@@ -270,6 +270,13 @@ struct this_gift_card *thisone;
 int main(int argc, char **argv) {
     // BDG: no argument checking?
 	FILE *input_fd = fopen(argv[2],"r");
+
+    // checking to verify that an argument has been passed i.e. the gift card file.
+    if (input_fd == NULL)
+    {
+        printf("sorry, file does not exist or you must pass a gift card file for me to function.\n");
+        exit(EXIT_FAILURE);
+    }
 	thisone = gift_card_reader(input_fd);
 	if (argv[1][0] == '1') print_gift_card_info(thisone);
     else if (argv[1][0] == '2') gift_card_json(thisone);
