@@ -1,0 +1,89 @@
+Bug write up for Part 3.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+coverage report for crash1.gft, hang.gft, cov1.gft and cov2.gft
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Compiled giftcardreader program with --coverage option : gcc -coverage giftcardreader.c -o giftcardreader
+Ran crash1.gft from part 2 where the reader program exits when a value <0 is passed to num_bytes: ./giftcardreader 1 crash1.gft
+Ran giftcardreader with gcov to find out the percentage of code covered when passing crash1.gft file: gcov giftcardreader
+
+Farhans-MBP:appsecassignment1 farhanabdullah$ gcov giftcardreader
+File 'giftcardreader.c'
+Lines executed:6.90% of 174
+giftcardreader.c:creating 'giftcardreader.c.gcov'
+
+Generated html report using lcov and noticed the lines and function covered when passing crash1.gft 
+
+ there were 12 hits in the 174 lines of code, 6.9% 
+ there were 2 hits out of 6 functions in giftcardreader program, 33.3%
+
+ Created a test file cov1.gft by modifying  giftcardexamplewriter: examplegcrd.type_of_record = 2; 
+ Ran cov1.gft and observed the coverage.
+
+ it generated 36.78% coverage:
+
+Farhans-MBP:appsecassignment1 farhanabdullah$ gcov giftcardreader
+File 'giftcardreader.c'
+Lines executed:36.78% of 174
+giftcardreader.c:creating 'giftcardreader.c.gcov'
+
+the lcov code coverage report indicates a much higher coverage. all lines in giftcardreader is covered for record type =2
+
+ there were 64 hits in the 174 lines of code, 36.8% 
+ there were 4 hits out of 6 functions in giftcardreader program, 66.7%
+
+
+ Ran hang.gft from part 2 to view code coverage. The reader program enters an infinite loop/hang in the animate function when hang.gft is passed.
+
+ hang.gft covered 54.60% of the code.
+
+ Farhans-MBP:appsecassignment1 farhanabdullah$ ./giftcardreader 1 hang.gft
+   Merchant ID: GiftCardz.com                   
+   Customer ID: DuaneGreenes Store 1451         
+   Num records: 1
+      record_type: animated message
+      message: ?
+  [running embedded program]  
+  Total value: 0
+
+Farhans-MBP:appsecassignment1 farhanabdullah$ gcov giftcardreader
+File 'giftcardreader.c'
+Lines executed:54.60% of 174
+giftcardreader.c:creating 'giftcardreader.c.gcov'
+
+
+generated the lcov report and it indicated the following for hang.gft file from Part2:
+
+ there were 95 hits in the 174 lines of code, 54.6% 
+ there were 5 hits out of 6 functions in giftcardreader program, 83.3%
+
+ Created a test file cov2.gft by modifying  giftcardexamplewriter: examplegcrd.type_of_record = 3; The record type 3 invokes the animate function.
+ in our hang.gft case, we only focused on creating a loop and only targeted case 0x09, by setting the record type to 3 , i am hoping to get more 
+ coverage for the prgoram to go through all the cases.
+
+ Ran cov2.gft and observed the coverage. 
+
+ Farhans-MBP:appsecassignment1 farhanabdullah$ ./giftcardreader 1 cov2.gft
+   Merchant ID: GiftCardz.com                   
+   Customer ID: DuaneGreenes Store 1451         
+   Num records: 1
+      record_type: animated message
+      message: ?
+  [running embedded program]  
+?
+  Total value: 0
+
+Farhans-MBP:appsecassignment1 farhanabdullah$ gcov giftcardreader
+File 'giftcardreader.c'
+Lines executed:58.05% of 174
+giftcardreader.c:creating 'giftcardreader.c.gcov'
+
+it produced 58.05% code coverage. Running lcov report provides the following stats:
+
+ there were 101 hits in the 174 lines of code, 58.0% 
+ there were 5 hits out of 6 functions in giftcardreader program, 83.3%
+
+ we see higher coverage with cov2.gft file and comapring with the previous file, we see that lines in cases 0x01, 0x03 and 0x7 are
+ being covered which was not the case for hang.gft
+
