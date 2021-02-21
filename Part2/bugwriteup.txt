@@ -28,7 +28,25 @@ Added a check in giftcardreader.c program to validate the value of num_bytes.
 
 Crash2.gft
 
-being worked on
+Bug:
+
+I have gotten a segmentation fault when running the giftcardreader.c program wtihout passing any .gft file. 
+this method does not produce any crash2.gft file, however, as per professor this is an acceptable submission for
+a crash. 
+
+Fix:
+i added the argument checking in the main function of giftcardreader.c to check if a gift file is being passed or the file exist
+if no argument is being passed or the file does not exist the directory, it prints a message to the console alerting user that
+file does not exist or no argument is being passed. the code added to the main function for check is below:
+
+   // checking to verify that an argument has been passed i.e. the gift card file.
+
+    if (input_fd == NULL)
+    {
+        printf("sorry, file does not exist or you must pass a gift card file for me to function.\n");
+        
+        exit(EXIT_FAILURE);
+    }
 
 
 hang.gft
