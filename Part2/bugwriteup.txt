@@ -65,7 +65,7 @@ Fix:
         unsigned char op, arg1, arg2;
 
 however, in case 0x09, the vulnerability was created by allowing the casting of signed char on pc += (char)arg1;
-updated the line of code pc += arg1; to only allow casting of unsigned char and stop PC to move
+updated the line of code pc += (unsigned char)arg1; to only allow casting of unsigned char and stop PC to move
 back and forth.
 
 
