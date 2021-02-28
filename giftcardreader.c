@@ -33,10 +33,13 @@ void animate(char *msg, unsigned char *program) {
             case 0x02:
                 *mptr = regs[arg1];
                 break;
+            //fuzzer1.gft fix prevent casting signed char
             case 0x03:
-                mptr += (char)arg1;
+                mptr += (unsigned char)arg1;
                 break;
+            //fuzzer.gift fix, prevent array out of bound
             case 0x04:
+            if (arg2 < 16)
                 regs[arg2] = arg1;
                 break;
             case 0x05:
@@ -54,8 +57,8 @@ void animate(char *msg, unsigned char *program) {
                 goto done;
             case 0x09:
                 //pc += (char)arg1;
-                //fix hang.gft
-                pc += arg1;
+                //fix hang.gft in part 2 to prenet casting signed char.
+                pc += (unsigned char)arg1;
                 break;
             case 0x10:
                 if (zf) pc += (char)arg1;
